@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Data Soal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    th, td {
+      vertical-align: top;
+      font-size: 14px;
+    }
+    img {
+      width: 80px;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3>📋 Tabel Soal (10 Data Pertama)</h3>
+    <a href="/soal/tambah" class="btn btn-primary">+ Tambah Soal</a>
+  </div>
+
+  <table class="table table-striped table-bordered">
+    <thead class="table-dark">
+      <tr>
+        <th>No</th>
+        <th>Pertanyaan</th>
+        <th>Keterangan</th>
+        <th>Gambar</th>
+        <th>Pilihan A</th>
+        <th>Pilihan B</th>
+        <th>Pilihan C</th>
+        <th>Pilihan D</th>
+        <th>Jawaban</th>
+        <th>Provinsi</th>
+        <th>Kelas</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in soal %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ s.pertanyaan }}</td>
+        <td>{{ s.keterangan }}</td>
+        <td><img src="/static/img/{{ s.gambar_url }}" alt="gambar"></td>
+        <td>{{ s.pilihan_a }}</td>
+        <td>{{ s.pilihan_b }}</td>
+        <td>{{ s.pilihan_c }}</td>
+        <td>{{ s.pilihan_d }}</td>
+        <td><span class="badge bg-success">{{ s.jawaban_benar }}</span></td>
+        <td>{{ s.provinsi_id }}</td>
+        <td>{{ s.kelas_id }}</td>
+        <td>
+          <a href="/soal/edit/{{ s.id }}" class="btn btn-sm btn-warning mb-1">Edit</a>
+          <a href="/soal/hapus/{{ s.id }}" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus soal ini?')">Hapus</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
