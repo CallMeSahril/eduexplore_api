@@ -12,6 +12,7 @@ from app.controllers.unlock_controller import api as unlock_ns
 from app.controllers.riwayat_controller import api as riwayat_ns
 from app.controllers.pulau_controller import api as pulau_ns
 from app.controllers.kelas_controller import api as kelas_ns
+from app.controllers.pdf_materi_api import api as pdf_ns
 
 api_blueprint = Blueprint('api', __name__)
 
@@ -35,3 +36,4 @@ api.add_namespace(unlock_ns, path='/unlock')
 api.add_namespace(riwayat_ns, path='/riwayat')
 api.add_namespace(pulau_ns, path='/pulau')
 api.add_namespace(kelas_ns, path='/kelas')
+api.add_namespace(pdf_ns, path='/pdf')

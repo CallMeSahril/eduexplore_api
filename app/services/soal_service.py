@@ -1,5 +1,5 @@
-
 from app.extensions.db import mysql
+
 def get_soal_by_provinsi(provinsi_id, kelas_id, user_id, page):
     cursor = mysql.connection.cursor()
 
@@ -23,7 +23,7 @@ def get_soal_by_provinsi(provinsi_id, kelas_id, user_id, page):
         return {
             "message": "Nyawa tidak cukup. Silakan reset atau tunggu untuk lanjut.",
             "lives": lives
-        }, 403  # 403 Forbidden
+        }, 403
 
     # Hitung offset dan ambil soal sesuai halaman
     limit = 1
@@ -39,20 +39,21 @@ def get_soal_by_provinsi(provinsi_id, kelas_id, user_id, page):
     if not soal:
         return {"message": "Soal tidak ditemukan"}, 404
 
-    # Bentuk respons soal lengkap
+    # Bentuk respons soal lengkap dengan tambahan 'keterangan'
     response = {
         "id": soal['id'],
         "pertanyaan": soal['pertanyaan'],
+        "keterangan": soal['keterangan'],  # Ditambahkan di sini
         "gambar_soal": soal['gambar_url'],
         "lives": lives,
         "soal_ke": page,
         "total_soal": total_soal,
         "pilihan": {
             "A": {"teks": soal['pilihan_a']},
-            "B": {"teks": soal['pilihan_b'] },
+            "B": {"teks": soal['pilihan_b']},
             "C": {"teks": soal['pilihan_c']},
             "D": {"teks": soal['pilihan_d']},
         }
     }
-
+    print(response)
     return response, 200

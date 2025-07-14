@@ -4,6 +4,7 @@ def get_soal_model(api):
     return api.model('Soal', {
         'id': fields.Integer,
         'pertanyaan': fields.String,
+        'keterangan': fields.String,  # ✅ Ditambahkan di sini
         'gambar_soal': fields.String,
         'lives': fields.Integer,
         'soal_ke': fields.Integer,
