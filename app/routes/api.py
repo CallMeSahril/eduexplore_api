@@ -13,7 +13,6 @@ from app.controllers.riwayat_controller import api as riwayat_ns
 from app.controllers.pulau_controller import api as pulau_ns
 from app.controllers.kelas_controller import api as kelas_ns
 from app.controllers.pdf_materi_api import api as pdf_ns
-
 api_blueprint = Blueprint('api', __name__)
 
 # Enable Swagger UI at /api/docs

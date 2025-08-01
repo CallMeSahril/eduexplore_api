@@ -1,6 +1,7 @@
 from flask_restx import Namespace, Resource
 from app.services.user_service import get_user_profile, delete_user
 from app.services.user_service import change_user_password
+from flask import request  # ← tambahkan ini
 
 api = Namespace('user', description='User operations')
 
