@@ -76,18 +76,27 @@ def delete_user(user_id):
             print("[DEBUG] User tidak ditemukan.")
             return {"message": "User tidak ditemukan"}, 404
 
-        print("[DEBUG] Menghapus data dari user_progress...")
+        # Hapus semua data yang berkaitan dengan user
+        print("[DEBUG] Menghapus data dari jawaban_user...")
+        cursor.execute(
+            "DELETE FROM jawaban_user WHERE user_id = %s", (user_id,))
+
+        print("[DEBUG] Menghapus data dari progress_user...")
         cursor.execute(
             "DELETE FROM user_progress WHERE user_id = %s", (user_id,))
+
         print("[DEBUG] Menghapus data dari users...")
         cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
-        mysql.connection.commit()
 
-        print(f"[DEBUG] User dengan ID {user_id} berhasil dihapus.")
-        return {"message": f"User dengan ID {user_id} berhasil dihapus"}, 200
+        mysql.connection.commit()
+        print(
+            f"[DEBUG] User dengan ID {user_id} berhasil dihapus beserta relasi-relasinya.")
+        return {"message": f"User dengan ID {user_id} dan semua data terkait berhasil dihapus"}, 200
+
     except Exception as e:
         print(f"[ERROR] Terjadi kesalahan saat menghapus user: {str(e)}")
         return {"message": f"Terjadi kesalahan: {str(e)}"}, 500
+
     finally:
         cursor.close()
 
