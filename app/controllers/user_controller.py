@@ -1,5 +1,7 @@
 from app.extensions.db import mysql
-from flask_restx import Namespace, Resource, request
+from flask_restx import Namespace, Resource
+from flask import request 
+
 from app.services.user_service import get_user_profile
 
 api = Namespace('user', description='User operations')
