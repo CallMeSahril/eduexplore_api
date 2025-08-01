@@ -1,5 +1,5 @@
 from app.extensions.db import mysql
-from flask_restx import Namespace, Resource
+from flask_restx import Namespace, Resource, request
 from app.services.user_service import get_user_profile
 
 api = Namespace('user', description='User operations')
@@ -11,6 +11,17 @@ class UserProfile(Resource):
         return get_user_profile(user_id)
 
 
+@api.route('/<int:user_id>')
+class UserDelete(Resource):
+    def delete(self, user_id):
+        return delete_user(user_id)
+
+
+@api.route('/change-password/<int:user_id>')
+class ChangePassword(Resource):
+    def put(self, user_id):
+        data = request.get_json()
+        return change_user_password(user_id, data)
 # ==== Contoh File: app/services/user_service.py ====
 
 
@@ -64,7 +75,8 @@ def delete_user(user_id):
             return {"message": "User tidak ditemukan"}, 404
 
         print("[DEBUG] Menghapus data dari user_progress...")
-        cursor.execute("DELETE FROM user_progress WHERE user_id = %s", (user_id,))
+        cursor.execute(
+            "DELETE FROM user_progress WHERE user_id = %s", (user_id,))
         print("[DEBUG] Menghapus data dari users...")
         cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
         mysql.connection.commit()
@@ -83,7 +95,8 @@ def change_user_password(user_id, data):
     old_password = data.get('old_password')
     new_password = data.get('new_password')
     confirm_password = data.get('confirm_password')
-    print(f"[DEBUG] Data diterima: old={old_password}, new={new_password}, confirm={confirm_password}")
+    print(
+        f"[DEBUG] Data diterima: old={old_password}, new={new_password}, confirm={confirm_password}")
 
     if not old_password or not new_password or not confirm_password:
         print("[DEBUG] Ada field yang kosong.")
@@ -109,7 +122,8 @@ def change_user_password(user_id, data):
             return {"message": "Password lama salah"}, 401
 
         print("[DEBUG] Password valid, mengupdate ke password baru...")
-        cursor.execute("UPDATE users SET password = %s WHERE id = %s", (new_password, user_id))
+        cursor.execute(
+            "UPDATE users SET password = %s WHERE id = %s", (new_password, user_id))
         mysql.connection.commit()
 
         print("[DEBUG] Password berhasil diubah.")
