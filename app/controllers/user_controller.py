@@ -1,6 +1,6 @@
 from app.extensions.db import mysql
 from flask_restx import Namespace, Resource
-from flask import request 
+from flask import request
 
 from app.services.user_service import get_user_profile
 
@@ -118,7 +118,7 @@ def change_user_password(user_id, data):
             print("[DEBUG] User tidak ditemukan.")
             return {"message": "User tidak ditemukan"}, 404
 
-        current_password = result[0]
+        current_password = result['password']
         if current_password != old_password:
             print("[DEBUG] Password lama salah.")
             return {"message": "Password lama salah"}, 401
