@@ -3,7 +3,7 @@ from app.services.user_service import get_user_profile, delete_user
 from app.services.user_service import change_user_password
 from flask import request  # ← tambahkan ini
 
-user_bp = Blueprint('user', description='User')
+user_bp = Blueprint('user', __name__)
 
 
 @user_bp.route('/profile/<int:user_id>')
